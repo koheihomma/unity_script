@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 		if(dist <= 0.001){
 				//目標地点の再設定
 				random_idx = Random.value;
-				if(random_idx >= 0.9){
+				if(random_idx >= 0.6){
 					dx = Random.Range(-1, 2);
 					dz = Random.Range(-1, 2);
 				}
@@ -68,11 +68,11 @@ public class PlayerController : MonoBehaviour {
 		//	SetDestination();
 		//}
 		//destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
-		Debug.Log("destination"+destination);
+		//Debug.Log("destination"+destination);
 		//direction = destination - pos;
 		//direction = direction / speed;
 
-		Debug.Log("direction"+direction);
+		//Debug.Log("direction"+direction);
 		myTransform.Translate(direction);
 
 		move_list.Add(new Vector2(direction.x * speed, direction.z * speed));
