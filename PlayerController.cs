@@ -27,11 +27,15 @@ public class PlayerController : MonoBehaviour {
 		SetPosition();
 
 		//目標地点の設定
-		SetDestination();
+		//SetDestination();
+		dx = Random.Range(-1, 2);
+		dz = Random.Range(-1, 2);
+		destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
 
-		while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
-			SetDestination();
-		}
+
+		//while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+		//	SetDestination();
+		//}
 		direction = destination - pos;
 		direction = direction / speed;
 	}
@@ -42,7 +46,7 @@ public class PlayerController : MonoBehaviour {
 		pos = myTransform.position;
 		float dist = Vector3.Distance(pos, destination);
 		Debug.Log("dist"+ idx + ":" + dist);
-		if(dist <= 0.1){
+		if(dist <= 0.001){
 				//目標地点の再設定
 				destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
 				random_idx = Random.value;
