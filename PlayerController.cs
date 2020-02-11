@@ -31,11 +31,9 @@ public class PlayerController : MonoBehaviour {
 		dx = Random.Range(-1, 2);
 		dz = Random.Range(-1, 2);
 		destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
-
-
-		//while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
-		//	SetDestination();
-		//}
+		while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+			SetDestination();
+		}
 		direction = destination - pos;
 		direction = direction / speed;
 	}
@@ -84,6 +82,14 @@ public class PlayerController : MonoBehaviour {
 
 		if(idx%Time==0){
 			SetPosition();
+			dx = Random.Range(-1, 2);
+			dz = Random.Range(-1, 2);
+			destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
+			while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+				SetDestination();
+			}
+			direction = destination - pos;
+			direction = direction / speed;
 		}
 
 		if(idx==Time*100){
@@ -124,8 +130,8 @@ public class PlayerController : MonoBehaviour {
 		seed+=1;
 		myTransform = this.transform;
 		pos = myTransform.position;
-		int x = Random.Range(-2, 2);
-		int z = Random.Range(-2, 2);
+		int x = Random.Range(-2, 3);
+		int z = Random.Range(-2, 3);
 		pos.x = x;
 		pos.y = 0.1f;
 		pos.z = z;
