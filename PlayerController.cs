@@ -49,16 +49,20 @@ public class PlayerController : MonoBehaviour {
 		Debug.Log("dist"+ idx + ":" + dist);
 		if(dist <= 0.001){
 				//目標地点の再設定
-				dx = Random.Range(-1, 2);
-				dz = Random.Range(-1, 2);
+				random_idx = Random.value;
+				if(random_idx >= 0.9){
+					dx = Random.Range(-1, 2);
+					dz = Random.Range(-1, 2);
+				}
+				//dx = Random.Range(-1, 2);
+				//dz = Random.Range(-1, 2);
 				destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
+				while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+					SetDestination();
+				}
 				direction = destination - pos;
 				direction = direction / speed;
-				//random_idx = Random.value;
-				//if(random_idx >= 0.9){
-				//	dx = Random.Range(-2, 2);
-				//	dz = Random.Range(-2, 2);
-				//}
+
 			}
 		//while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
 		//	SetDestination();
@@ -112,20 +116,6 @@ public class PlayerController : MonoBehaviour {
 	void SetDestination(){
 		dx = Random.Range(-1, 2);
 		dz = Random.Range(-1, 2);
-		if(pos.x==-2.0){
-			dx = Random.Range(0, 2);
-		}
-		if(pos.x==2.0){
-			dx = Random.Range(-1, 1);
-		}
-		if(pos.z==-2.0){
-			dz = Random.Range(0, 2);
-		}
-		if(pos.z==2.0){
-			dz = Random.Range(-1, 1);
-		}
-		//dx = Random.Range(-1, 2);
-		//dz = Random.Range(-1, 2);
 		destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
 	}
 
