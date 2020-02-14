@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	private List<Vector2> pos_list = new List<Vector2>();
 	private int idx;
 	public int Time = 1003;
-	public int seed = 10;
+	public int seed = 1000;
 	private int dx;
 	private int dz;
 	private float random_idx;
@@ -62,15 +62,7 @@ public class PlayerController : MonoBehaviour {
 				direction = direction / speed;
 
 			}
-		//while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
-		//	SetDestination();
-		//}
-		//destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
-		//Debug.Log("destination"+destination);
-		//direction = destination - pos;
-		//direction = direction / speed;
 
-		//Debug.Log("direction"+direction);
 		myTransform.Translate(direction);
 
 		move_list.Add(new Vector2(direction.x * speed, direction.z * speed));
@@ -92,14 +84,14 @@ public class PlayerController : MonoBehaviour {
 			direction = direction / speed;
 		}
 
-		if(idx==Time*100){
+		if(idx==Time*10){
 		Quit();
 		}
 	}
 
 	void OnApplicationQuit(){
-		string path_move = "Motion.txt";
-		string path_pos = "Position.txt";
+		string path_move = "Motion_test.txt";
+		string path_pos = "Position_test.txt";
 		Debug.Log("アプリケーションを終了します。"+"データ数:"+move_list.Count);
 		for(int i = 0; i < move_list.Count; ++i)
 		{

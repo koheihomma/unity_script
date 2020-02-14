@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour {
 		frameRate = 10;
 		seed = script.seed;
 
-		folder = "ScreenshotFolder_" + frameRate.ToString();
+		folder = "ScreenshotFolder_test";
 		transform.position = player.transform.position;
 		// Set the playback framerate (real time will not relate to game time after this).
 		Time.captureFramerate = frameRate;
