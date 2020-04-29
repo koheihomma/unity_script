@@ -6,14 +6,18 @@ using System.IO;
 public class PlayerController : MonoBehaviour {
 	private Vector3 destination;
 	private Vector3 direction;
-	public float speed = 10.0f;
+	public float speed = 1.0f;
 	private Vector3 pos;
 	private Transform myTransform;
 	private List<Vector2> move_list = new List<Vector2>();
 	private List<Vector2> pos_list = new List<Vector2>();
 	private int idx;
 	public int Time = 1003;
+	public int data_n = 10;
 	public int seed = 1000;
+	public string path_move = "Motion_test.txt";
+	public string path_pos = "Position_test.txt";
+	public float reset = 0.1f;
 	private int dx;
 	private int dz;
 	private float random_idx;
@@ -27,13 +31,11 @@ public class PlayerController : MonoBehaviour {
 		SetPosition();
 
 		//目標地点の設定
-		//SetDestination();
-		dx = Random.Range(-1, 2);
-		dz = Random.Range(-1, 2);
-		destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
-		while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+		SetDestination();
+		while(destination.x < -10.0f ||  10.0f < destination.x || destination.z < -10.0f ||  10.0f < destination.z || Vector3.Distance(pos, destination) < 0.001){
 			SetDestination();
 		}
+
 		direction = destination - pos;
 		direction = direction / speed;
 	}
@@ -44,18 +46,17 @@ public class PlayerController : MonoBehaviour {
 		pos = myTransform.position;
 
 		float dist = Vector3.Distance(pos, destination);
-		Debug.Log("dist"+ idx + ":" + dist);
+		//Debug.Log("destination"+ idx + ":" + destination);
+		//Debug.Log("dist"+ idx + ":" + dist);
 		if(dist <= 0.001){
 				//目標地点の再設定
 				random_idx = Random.value;
-				if(random_idx >= 0.6){
+				if(random_idx < reset){
 					dx = Random.Range(-1, 2);
 					dz = Random.Range(-1, 2);
 				}
-				//dx = Random.Range(-1, 2);
-				//dz = Random.Range(-1, 2);
-				destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
-				while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+				destination = new Vector3(Mathf.Clamp(pos.x + dx, -10.0f, 10.0f), pos.y, Mathf.Clamp(pos.z + dz, -10.0f, 10.0f));
+				while(destination.x < -10.0f ||  10.0f < destination.x || destination.z < -10.0f ||  10.0f < destination.z || Vector3.Distance(pos, destination) < 0.001){
 					SetDestination();
 				}
 				direction = destination - pos;
@@ -74,24 +75,22 @@ public class PlayerController : MonoBehaviour {
 
 		if(idx%Time==0){
 			SetPosition();
-			dx = Random.Range(-1, 2);
-			dz = Random.Range(-1, 2);
-			destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
-			while(destination.x < -2.0f ||  2.0f < destination.x || destination.z < -2.0f ||  2.0f < destination.z || destination==pos){
+			SetDestination();
+			while(destination.x < -10.0f ||  10.0f < destination.x || destination.z < -10.0f ||  10.0f < destination.z || Vector3.Distance(pos, destination) < 0.001){
 				SetDestination();
 			}
 			direction = destination - pos;
 			direction = direction / speed;
 		}
 
-		if(idx==Time*10){
+		if(idx==Time*data_n){
+		//if(idx==Time*10){
 		Quit();
 		}
 	}
 
 	void OnApplicationQuit(){
-		string path_move = "Motion_test.txt";
-		string path_pos = "Position_test.txt";
+
 		Debug.Log("アプリケーションを終了します。"+"データ数:"+move_list.Count);
 		for(int i = 0; i < move_list.Count; ++i)
 		{
@@ -114,7 +113,7 @@ public class PlayerController : MonoBehaviour {
 	void SetDestination(){
 		dx = Random.Range(-1, 2);
 		dz = Random.Range(-1, 2);
-		destination = new Vector3(Mathf.Clamp(pos.x + dx, -2.0f, 2.0f), pos.y, Mathf.Clamp(pos.z + dz, -2.0f, 2.0f));
+		destination = new Vector3(Mathf.Clamp(pos.x + dx, -10.0f, 10.0f), pos.y, Mathf.Clamp(pos.z + dz, -10.0f, 10.0f));
 	}
 
 	//初期位置をランダムに設定
@@ -122,10 +121,12 @@ public class PlayerController : MonoBehaviour {
 		seed+=1;
 		myTransform = this.transform;
 		pos = myTransform.position;
-		int x = Random.Range(-2, 3);
-		int z = Random.Range(-2, 3);
+		int x = Random.Range(-10, 11);
+		int z = Random.Range(-10, 11);
+		//int x = 0; //test2
+		//int z = 0;
 		pos.x = x;
-		pos.y = 0.1f;
+		pos.y = 0.5f;
 		pos.z = z;
 		myTransform.position = pos;
 		Debug.Log ("start!");

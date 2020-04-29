@@ -17,26 +17,23 @@ public class CameraController : MonoBehaviour {
   private Camera _subCamera;
 
 	public GameObject player;
-	public PlayerController script;
 	public int Angle_offset;
 
-	public string folder;
+	private string folder;
+	public string folder_name = "ScreenshotFolder_";
 	public int frameRate;
 	public string name;
 	private Vector3 offset;
-	private int seed;
 
 
 	void Start () {
 		SetResolution(_resolutionWeight);
 
 		player = GameObject.Find("Player");
-		script = player.GetComponent<PlayerController>();
 
 		frameRate = 10;
-		seed = script.seed;
 
-		folder = "ScreenshotFolder_test";
+		folder = folder_name;
 		transform.position = player.transform.position;
 		// Set the playback framerate (real time will not relate to game time after this).
 		Time.captureFramerate = frameRate;
